@@ -74,7 +74,7 @@ const Login = () => {
           </button>
           <div className="text-sm">
             Don't have an account?
-            <Link>
+            <Link to={"/signup"}>
               <span className="text-blue-500 text-sm font-semibold cursor-pointer hover:text-blue-700 ml-1">
                 Sign up
               </span>

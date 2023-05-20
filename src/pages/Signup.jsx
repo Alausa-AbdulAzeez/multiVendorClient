@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { BASE_URL } from "../functions/requestMethods";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   // FORM DATA
@@ -11,6 +13,9 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   // END OF FORM DATA
+
+  // REACT TOAST
+  const toastId = React.useRef(null);
 
   // FUNCTION THAT HANDLES THE CHANGE OF FORM DATA
   const handleFormDataChange = (e, dataType) => {
@@ -64,19 +69,47 @@ const Signup = () => {
     formDetails.append("password", password);
 
     // END OF FORM DETAILS SETTING FUNCTIONALITIES
-    for (const value of formDetails.values()) {
-      console.log(value);
+
+    toastId.current = toast("Please wait...", {
+      autoClose: 3000,
+      isLoading: true,
+    });
+
+    try {
+      if (password === confirmPassword) {
+        axios
+          .post(`${BASE_URL}/user/register`, formDetails, configuration)
+          .then(() => {
+            toast.update(toastId.current, {
+              render: "Candidate scheduled succesfully!",
+              type: "success",
+              isLoading: false,
+              autoClose: 3000,
+            });
+          });
+      } else {
+        throw new Error("Passwords do not match");
+      }
+    } catch (error) {
+      console.log(error.message);
+      toast.update(toastId.current, {
+        type: "error",
+        autoClose: 3000,
+        isLoading: false,
+        render: `${
+          error?.response?.data?.title ||
+          error?.response?.data?.description ||
+          error?.message ||
+          "Something went wrong, please try again"
+        }`,
+      });
     }
-    // try {
-    //   axios.post(`${BASE_URL}/user/register`, formDetails, configuration);
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
   // END OF FUNCTION TO REGISTER USER
 
   return (
     <div className="flex flex-col items-center h-screen py-8 bg-gray-50 sm:px-6 lg:px-8">
+      <ToastContainer />
       <h1 className="text-3xl font-bold ">Sign up</h1>
       <form className="bg-white rounded-lg  mx-auto px-4 py-8 mt-8 sm:w-full sm:max-w-md sm:px-10 space-y-6">
         <div className="flex flex-col ">

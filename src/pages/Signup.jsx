@@ -77,7 +77,7 @@ const Signup = () => {
 
     try {
       if (password === confirmPassword) {
-        axios
+        await axios
           .post(`${BASE_URL}/user/register`, formDetails, configuration)
           .then(() => {
             toast.update(toastId.current, {
@@ -92,6 +92,7 @@ const Signup = () => {
       }
     } catch (error) {
       console.log(error.message);
+      console.log("error");
       toast.update(toastId.current, {
         type: "error",
         autoClose: 3000,
@@ -99,6 +100,7 @@ const Signup = () => {
         render: `${
           error?.response?.data?.title ||
           error?.response?.data?.description ||
+          error?.response?.data?.message ||
           error?.message ||
           "Something went wrong, please try again"
         }`,

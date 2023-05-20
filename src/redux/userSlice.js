@@ -15,7 +15,8 @@ export const userSlice = createSlice({
       state.loginStart = true;
     },
     loginSuccess: (state, action) => {
-      (state.loginStart = false), (state.loginSuccess = true);
+      state.loginStart = false;
+      state.loginSuccess = true;
       state.user = action.payload;
     },
     loginFailure: (state) => {
@@ -28,4 +29,4 @@ export const userSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const { loginFailure, loginStart, loginSuccess } = userSlice.actions;
 
-export default counterSlice.reducer;
+export default userSlice.reducer;

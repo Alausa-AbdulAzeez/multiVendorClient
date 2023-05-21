@@ -33,7 +33,6 @@ const Signup = () => {
     }
   };
 
-  console.log(name, email, password);
   // END OF FUNCTION THAT HANDLES THE CHANGE OF FORM DATA
 
   // FUNCTIONALITIES FOR PASSWORD TOGGLE
@@ -79,6 +78,7 @@ const Signup = () => {
       if (password === confirmPassword) {
         await axios
           .post(`${BASE_URL}/user/register`, formDetails, configuration)
+          .then((res) => console.log(res))
           .then(() => {
             toast.update(toastId.current, {
               render: "Candidate scheduled succesfully!",

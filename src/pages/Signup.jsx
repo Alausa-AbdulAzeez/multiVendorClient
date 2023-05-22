@@ -1,12 +1,17 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../functions/requestMethods";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../redux/userSlice";
 
 const Signup = () => {
+  // MISCELLANEOUS
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   // FORM DATA
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -78,14 +83,21 @@ const Signup = () => {
       if (password === confirmPassword) {
         await axios
           .post(`${BASE_URL}/user/register`, formDetails, configuration)
-          .then((res) => console.log(res))
+          .then((res) => {
+            dispatch(loginSuccess(res?.data));
+          })
           .then(() => {
             toast.update(toastId.current, {
-              render: "Candidate scheduled succesfully!",
+              render: "User created succesfully!",
               type: "success",
               isLoading: false,
               autoClose: 3000,
             });
+          })
+          .then(() => {
+            setTimeout(() => {
+              navigate("/");
+            }, 3000);
           });
       } else {
         throw new Error("Passwords do not match");

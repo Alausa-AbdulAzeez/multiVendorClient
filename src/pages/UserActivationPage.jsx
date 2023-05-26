@@ -8,17 +8,20 @@ const UserActivationPage = () => {
   let { activation_token } = useParams()
 
   // FUNCTION TO CALL THE ACTIVATE USER ENDPOINT
-  // const activateUser = async ()=>{
-  //   try {
-  //     axios.post(`${BASE_URL}/`,activation_token,defaultConfiguration )
-  //   } catch (error) {
+  const activateUser = async () => {
+    console.log(activation_token)
+    try {
+      await axios
+        .post(`${BASE_URL}/user/activate`, { activation_token })
+        .then((res) => console.log(res))
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
-  //   }
-  // }
-
-  // useEffect(()=>{
-
-  // },[])
+  useEffect(() => {
+    activateUser()
+  }, [])
   return (
     <div className='flex items-center h-screen bg-red-200 justify-center'></div>
   )

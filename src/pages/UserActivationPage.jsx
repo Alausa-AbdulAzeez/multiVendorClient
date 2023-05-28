@@ -39,6 +39,7 @@ const UserActivationPage = () => {
   };
 
   // USEEFFECT TO CALL THE ACTIVATE USER FUNCTION
+
   useEffect(() => {
     activateUser();
     // eslint-disable-next-line

@@ -123,7 +123,7 @@ const Signup = () => {
 
   return (
     <div className="flex flex-col items-center h-screen py-8 bg-gray-50 sm:px-6 lg:px-8">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <h1 className="text-3xl font-bold ">Sign up</h1>
       <form className="bg-white rounded-lg  mx-auto px-4 py-8 mt-8 sm:w-full sm:max-w-md sm:px-10 space-y-6">
         <div className="flex flex-col ">

@@ -21,10 +21,7 @@ const UserActivationPage = () => {
           {
             headers: {
               withCredentials: true,
-              // "Access-Control-Allow-Origin": "*",
               "Content-Type": "application/json",
-              // Accept: "application/json",
-              // "Access-Control-Allow-Credentials": "true",
             },
           }
         )

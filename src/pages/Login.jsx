@@ -13,7 +13,7 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen bg-gray-50  flex flex-col py-12  sm:px-6 lg:px-8">
+    <div className="h-screen bg-slate-500  flex flex-col py-12  sm:px-6 lg:px-8">
       <h1 className="text-center text-3xl font-bold mt-6">
         Login to your account
       </h1>

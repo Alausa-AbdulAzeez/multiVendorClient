@@ -5,7 +5,6 @@ import "./App.css";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import UserActivationPage from "./pages/UserActivationPage";
-import { ToastContainer } from "react-toastify";
 
 const App = () => {
   return (
@@ -19,7 +18,6 @@ const App = () => {
           element={<UserActivationPage />}
         />
       </Routes>
-      <ToastContainer />
     </BrowserRouter>
   );
 };

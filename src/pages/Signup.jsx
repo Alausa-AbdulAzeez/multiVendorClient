@@ -4,9 +4,9 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../functions/requestMethods";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../redux/userSlice";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   // MISCELLANEOUS
@@ -64,15 +64,12 @@ const Signup = () => {
     const configuration = {
       headers: { "Content-Type": "multipart/form-data" },
     };
-    // FORM DETAILS SETTING FUNCTIONALITIES
 
-    const formDetails = new FormData();
-
-    formDetails.append("name", name);
-    formDetails.append("email", email);
-    formDetails.append("password", password);
-
-    // END OF FORM DETAILS SETTING FUNCTIONALITIES
+    const user = {
+      name,
+      email,
+      password,
+    };
 
     toastId.current = toast("Please wait...", {
       autoClose: 3000,
@@ -82,22 +79,20 @@ const Signup = () => {
     try {
       if (password === confirmPassword) {
         await axios
-          .post(`${BASE_URL}/user/register`, formDetails, configuration)
+          .post(`${BASE_URL}/user/register`, user, configuration)
           .then((res) => {
-            dispatch(loginSuccess(res?.data));
-          })
-          .then(() => {
             toast.update(toastId.current, {
-              render: "User created succesfully!",
+              render: res?.data?.message,
               type: "success",
               isLoading: false,
               autoClose: 3000,
             });
           })
           .then(() => {
-            setTimeout(() => {
-              navigate("/");
-            }, 3000);
+            setEmail("");
+            setName("");
+            setConfirmPassword("");
+            setPassword("");
           });
       } else {
         throw new Error("Passwords do not match");
@@ -122,10 +117,12 @@ const Signup = () => {
   // END OF FUNCTION TO REGISTER USER
 
   return (
-    <div className="flex flex-col items-center h-screen py-8 bg-gray-50 sm:px-6 lg:px-8">
-      {/* <ToastContainer /> */}
-      <h1 className="text-3xl font-bold ">Sign up</h1>
-      <form className="bg-white rounded-lg  mx-auto px-4 py-8 mt-8 sm:w-full sm:max-w-md sm:px-10 space-y-6">
+    <div className="flex flex-col items-center h-screen py-8 bg-gray-100  sm:px-6 lg:px-8">
+      <ToastContainer />
+      <form className="bg-white rounded-lg  mx-auto px-4 py-8 mt-8 sm:w-full sm:max-w-md sm:px-10 space-y-6 shadow-lg">
+        <h1 className="text-3xl font-bold text-blue-500 text-center">
+          Sign up
+        </h1>
         <div className="flex flex-col ">
           <label
             htmlFor="fullName"
@@ -139,6 +136,7 @@ const Signup = () => {
             placeholder="John Doe"
             className="border border-gray-200 p-2 mt-1 text-sm focus:outline-none focus:border-blue-300 rounded"
             onChange={(e) => handleFormDataChange(e, "name")}
+            value={name}
           />
         </div>
         <div className="flex flex-col ">
@@ -153,6 +151,7 @@ const Signup = () => {
             placeholder="example@gmail.com"
             className="border border-gray-200 p-2 mt-1 text-sm focus:outline-none focus:border-blue-300 rounded"
             onChange={(e) => handleFormDataChange(e, "email")}
+            value={email}
           />
         </div>
         <div className="flex flex-col relative">
@@ -168,6 +167,7 @@ const Signup = () => {
             placeholder="Password"
             className="border border-gray-200 p-2 mt-1 text-sm focus:outline-none focus:border-blue-300 rounded"
             onChange={(e) => handleFormDataChange(e, "password")}
+            value={password}
           />
           {isPasswordVisible ? (
             <AiOutlineEye
@@ -192,8 +192,9 @@ const Signup = () => {
             id="confirmPassword"
             type={isConfirmPasswordVisible ? "text" : "password"}
             placeholder="Password"
-            className="border border-gray-200 p-2 mt-1 text-sm focus:outline-none focus:border-blue-300 rounded"
+            className="border border-gray-200 p-2 mt-1 text-sm focus:outline-none focus:border-blue-300 rounded "
             onChange={(e) => handleFormDataChange(e, "confirmPassword")}
+            value={confirmPassword}
           />
           {isConfirmPasswordVisible ? (
             <AiOutlineEye

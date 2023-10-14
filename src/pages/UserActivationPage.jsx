@@ -47,7 +47,7 @@ const UserActivationPage = () => {
   //   console.log(response);
   // }, [response]);
   return (
-    <div className="flex items-center h-screen bg-blue-100 justify-center">
+    <div className="flex items-center h-screen bg-blue-100 justify-center text-lg font-semibold">
       {response?.response?.status === 409 || response?.response?.status === 200
         ? "Account has been seccessfylly activated"
         : response?.response?.data?.message ||

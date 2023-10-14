@@ -1,17 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BASE_URL } from "../functions/requestMethods";
 import { ToastContainer, toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { loginSuccess } from "../redux/userSlice";
 import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
-  // MISCELLANEOUS
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   // FORM DATA
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -99,7 +94,6 @@ const Signup = () => {
       }
     } catch (error) {
       console.log(error.message);
-      console.log("error");
       toast.update(toastId.current, {
         type: "error",
         autoClose: 3000,
@@ -120,7 +114,7 @@ const Signup = () => {
     <div className="flex flex-col items-center h-screen py-8 bg-gray-100  sm:px-6 lg:px-8">
       <ToastContainer />
       <form className="bg-white rounded-lg  mx-auto px-4 py-8 mt-8 sm:w-full sm:max-w-md sm:px-10 space-y-6 shadow-lg">
-        <h1 className="text-3xl font-bold text-blue-500 text-center">
+        <h1 className="text-3xl font-bold text-blue-500 text-center ">
           Sign up
         </h1>
         <div className="flex flex-col ">
